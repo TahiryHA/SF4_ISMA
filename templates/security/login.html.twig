@@ -1,0 +1,82 @@
+{% extends "remark.html.twig" %}
+{% block js %}
+	<link rel="stylesheet" href="{{asset('remark/assets/examples/css/pages/register.css')}}">
+	<script>
+		Breakpoints();
+	</script>
+{% endblock %}
+
+{% block pages %}
+
+
+	<!-- Page -->
+	<div class="section-1-container section-container">
+    <div class="container">
+        {# <div class="row">
+            <div class="col section-1 section-description">
+                <h1>Bootstrap 4: Align Center</h1>
+                <div class="divider-1"><span></span></div>
+                <p>A tutorial on how to align a "div" element vertically and horizontally in Bootstrap 4.</p>
+            </div>
+        </div> #}
+        <div class="row">
+            <div class="col-10 offset-1 col-lg-8 offset-lg-2 div-wrapper d-flex justify-content-center align-items-center">
+ 
+                <div class="div-to-align">
+
+					<h1 class="justify-content-center">{{App.name}}</h1>
+                    
+					<p>Connectez-vous pour commencer</p>
+          <form method="post" class="form-signin">
+		  {% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		  {% endif %}
+            <div class="form-group">
+              <label class="sr-only" for="inputEmail">Username</label>
+              <input type="text" class="form-control" id="inputEmail" name="username" placeholder="{{ 'login.username'|trans }}" required>
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="inputPassword">Password</label>
+              <input type="password" class="form-control" id="inputPassword" name="password"
+                placeholder="{{ 'login.password'|trans }}" required>
+            </div>
+            {# <div class="form-group clearfix">
+              <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
+                <input type="checkbox" id="rememberMe" name="_remember_me">
+                <label for="rememberMe">{{ 'login.remember_me'|trans }}</label>
+              </div> #}
+              {# <a class="float-right" href="forgot-password.html">Forgot password?</a> #}
+            {# </div> #}
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="btn btn-success btn-block">S'authentifier</button>
+
+          </form>
+
+          
+					<p>Vous n'avez pas encore de compte? S'il vous plaît allez à 
+						<a href="{{path('app_register')}}">S'enregistrer</a>
+					</p>
+                </div>
+ 
+            </div>
+        </div>
+    </div>
+</div>
+
+	<!-- End Page -->
+{% endblock %}
+{% block javascript %}
+	<script src="{{asset('global/js/Plugin/animate-list.js')}}"></script>
+	<script>
+		(function (document, window, $) {
+'use strict';
+
+var Site = window.Site;
+$(document).ready(function () {
+Site.run();
+});
+})(document, window, jQuery);
+	</script>
+{% endblock %}
+

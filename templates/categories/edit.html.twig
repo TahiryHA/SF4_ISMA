@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'categories' }
+    )) }}
+{% endblock %}
+
+{% block entete %}
+ <span class="fa fa-edit-plus"></span>
+  Modifier une catégorie
+{% endblock %}
+
+{% block page %}
+
+<!-- Panel Full Example -->
+{{ form_start(form,{'attr': {'id' : 'exampleFullForm', 'autocomplete':'off' }}) }}
+        {% include 'categories/_form.html.twig' with {form: form} %}
+{{ form_end(form) }}
+<!-- End Panel Full Example -->
+
+
+{% endblock %}

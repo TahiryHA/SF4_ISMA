@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'commandes' }
+    )) }}
+{% endblock %} 
+
+{% block page %} 
+    <h1>Commande</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ commande.id }}</td>
+            </tr>
+            <tr>
+                <th>Client</th>
+                <td>{{ commande.user.username }}</td>
+            </tr>
+            <tr>
+                <th>Article</th>
+                <td>{{ commande.article.name }}</td>
+            </tr>
+            <tr>
+                <th>Qte</th>
+                <td>{{ commande.qte }}</td>
+            </tr>
+             <tr>
+                <th>Total</th>
+                <td>{{ commande.total }}</td>
+            </tr>
+            <tr>
+                <th>Date de commande</th>
+                <td>{{ commande.createdAt ? commande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('commandes_index') }}">back to list</a>
+
+    {{ include('admin/commandes/_delete_form.html.twig') }}
+{% endblock %}

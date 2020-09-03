@@ -1,0 +1,33 @@
+<div class="table table-responsive">
+<table class="table">
+        <thead>
+            <tr>
+                <th>Date d'ajout</th>
+                <th>Catégorie</th>
+                <th>Article</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ article.categorie.name }}</td>
+                <td>{{ article.name }}</td>
+                <td>{{ article.price }}</td>
+                <td>{{ article.image }}</td>
+                <td>
+                    <a href="{{ path('articles_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('articles_edit', {'id': article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>

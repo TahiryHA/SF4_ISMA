@@ -1,0 +1,105 @@
+{% extends "admin/base.html.twig" %}
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'index' }
+    )) }}
+{% endblock %}
+
+{% block plugins %}
+<link rel="stylesheet" href="{{asset('global/vendor/chartist/chartist.css')}}">
+<link rel="stylesheet" href="{{asset('global/vendor/aspieprogress/asPieProgress.css')}}">
+<link rel="stylesheet" href="{{asset('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}">
+<link rel="stylesheet" href="{{asset('remark/assets/examples/css/dashboard/ecommerce.css')}}">
+{% endblock %}
+{% block className %}class="animsition ecommerce_dashboard"{% endblock %}
+{% block main %}
+{% if app.user %}
+<div class="page">
+      <div class="page-header">
+        {# <h1 class="page-title font-size-26 font-weight-100">Dashboard Overview</h1> #}
+      </div>
+
+      <div class="page-content container-fluid">
+        <div class="row">
+          <!-- First Row -->
+          <div class="col-xl-3 col-md-6 info-panel" style="cursor:pointer;" onclick="window.location.href='{{path('articles_index')}}'">
+            <div class="card card-shadow">
+              <div class="card-block bg-white p-20">
+                <button type="button" class="btn btn-floating btn-sm btn-warning">
+                  <i class="icon wb-star"></i>
+                </button>
+                <span class="ml-15 font-weight-400">ARTICLES</span>
+                <div class="content-text text-center mb-0">
+                  <i class="text-danger icon wb-triangle-up font-size-20">
+              </i>
+                  <span class="font-size-40 font-weight-100">{{data.articles}}</span>
+                  {# <p class="blue-grey-400 font-weight-100 m-0">+45% From previous month</p> #}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 info-panel" style="cursor:pointer;" onclick="window.location.href='{{path('categories_index')}}'">
+            <div class="card card-shadow">
+              <div class="card-block bg-white p-20">
+                <button type="button" class="btn btn-floating btn-sm btn-danger">
+                  <i class="icon fa-money"></i>
+                </button>
+                <span class="ml-15 font-weight-400">CATEGORIES</span>
+                <div class="content-text text-center mb-0">
+                  <i class="text-success icon wb-triangle-down font-size-20">
+              </i>
+                  <span class="font-size-40 font-weight-100">{{data.categories}}</span>
+                  {# <p class="blue-grey-400 font-weight-100 m-0">+45% From previous month</p> #}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 info-panel" style="cursor:pointer;" onclick="window.location.href='{{path('commandes_index')}}'">
+            <div class="card card-shadow">
+              <div class="card-block bg-white p-20">
+                <button type="button" class="btn btn-floating btn-sm btn-success">
+                  <i class="icon wb-briefcase"></i>
+                </button>
+                <span class="ml-15 font-weight-400">COMMANDES</span>
+                <div class="content-text text-center mb-0">
+                  <i class="text-danger icon wb-triangle-up font-size-20">
+              </i>
+                  <span class="font-size-40 font-weight-100">{{data.commandes}}</span>
+                  {# <p class="blue-grey-400 font-weight-100 m-0">+25% From previous month</p> #}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 info-panel" style="cursor:pointer;" onclick="window.location.href='{{path('admin_users')}}'">
+            <div class="card card-shadow">
+              <div class="card-block bg-white p-20">
+                <button type="button" class="btn btn-floating btn-sm btn-success">
+                  <i class="icon wb-users"></i>
+                </button>
+                <span class="ml-15 font-weight-400">CLIENTS</span>
+                <div class="content-text text-center mb-0">
+                  <i class="text-danger icon wb-triangle-up font-size-20">
+              </i>
+                  <span class="font-size-40 font-weight-100">{{data.users}}</span>
+                  {# <p class="blue-grey-400 font-weight-100 m-0">+25% From previous month</p> #}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End First Row -->
+        </div>
+     </div>
+</div>
+{% endif %}
+
+{% endblock %}
+{% block pluginsFoot %}
+<script src="{{asset('global/vendor/chartist/chartist.min.js')}}"></script>
+<script src="{{asset('global/vendor/aspieprogress/jquery-asPieProgress.js')}}"></script>
+<script src="{{asset('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}"></script>
+{% endblock %}
+{% block pageFoot %}
+<script src="{{asset('global/js/Plugin/aspieprogress.js')}}"></script>
+<script src="{{asset('remark/assets/examples/js/dashboard/ecommerce.js')}}"></script>
+{% endblock %}

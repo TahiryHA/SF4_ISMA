@@ -1,0 +1,8 @@
+{% extends 'admin/settings/base.html.twig' %}
+
+{% block content %}
+<div class="example-wrap">
+    <h4 class="example-title">Liste des utilisateurs</h4>
+	{% include 'admin/settings/user/table.html.twig' with {users: users} %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+index:
+  path:
+    fr: /
+    en: /en
+  controller: App\Controller\DefaultController::index
+
+cart_add:
+  path:
+    fr: /panier/add/{id}
+    en: /en/panier/add/{id}
+  controller: App\Controller\DefaultController::add
+
+my_cart:
+    path:
+      fr: /mon-panier
+      en: /en/my-cart
+    controller: App\Controller\DefaultController::my_cart
+
+validate:
+  path:
+    fr: /validate
+    en: /en/validate
+  controller: App\Controller\DefaultController::validate
+
+cart_remove:
+  path:
+    fr: /panier/remove/{id}
+    en: /en/panier/remove/{id}
+  controller: App\Controller\DefaultController::remove

@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Commandes index{% endblock %}
+
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'commandes' }
+    )) }}
+{% endblock %} 
+
+{% block entete %}
+
+<span class="fa fa-users"></span>
+Commandes <span class="badge badge-pill badge-success">{{commandes|length}}</span>
+
+{% endblock %}
+
+{% block page %}
+
+<div class="example-wrap">
+      <h4 class="example-title">Liste des commandes</h4>
+        {% include "admin/commandes/table.html.twig" %}
+</div>
+{% endblock %}

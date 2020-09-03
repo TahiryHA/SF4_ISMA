@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}New Categories{% endblock %}
+
+{% block left_sidebar %}
+    {{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'new-categorie' }
+    )) }}
+{% endblock %}
+{% block plugins %} 
+<link rel="stylesheet" href="{{asset('global/vendor/formvalidation/formValidation.css')}}">
+<link rel="stylesheet" href="{{asset('remark/assets/examples/css/forms/validation.css')}}">
+{% endblock %}
+
+{% block entete %}
+    <span class="fa fa-user-plus"></span>
+    Ajouter une catégorie
+{% endblock %}
+
+{% block page %}
+
+     <!-- Panel Full Example -->
+    {{ form_start(form,{'attr': {'id' : 'exampleFullForm', 'autocomplete':'off' }}) }}
+            {% include 'categories/_form.html.twig' with {form: form} %}
+    {{ form_end(form) }}
+    <!-- End Panel Full Example -->
+
+{% endblock %}
+{% block pageFoot %}
+<script src="{{asset('remark/assets/examples/js/forms/validation.js')}}"></script>
+{% endblock %}

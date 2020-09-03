@@ -1,0 +1,34 @@
+<div class="table table-responsive">
+<table class="table">
+        <thead>
+            <tr>
+                <th>Date d'ajout</th>
+                <th>Client</th>
+                <th>Article</th>
+                <th>Qte</th>
+                <th>PU</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.createdAt ? commande.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande.user.username }}</td>
+                <td>{{ commande.article.name }}</td>
+                <td>{{ commande.qte }}</td>
+                <td>{{ commande.article.price }}</td>
+                <td>{{ commande.total }}</td>
+                <td>
+                    <a href="{{ path('commandes_show', {'id': commande.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>

@@ -1,0 +1,508 @@
+{% set lang = 'en' %}
+
+{% set search_terms = app.request.query.get('terms', '') %}
+{% set search_type = app.request.query.get('type', '') %}
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+		<meta name="description" content="bootstrap admin template">
+		<meta name="author" content="">
+
+		<title>
+			{% block title %}
+				Administration |
+				{{ App.name }}
+			{% endblock %}
+		</title>
+
+		<link rel="apple-touch-icon" href="{{asset('remark/assets/images/apple-touch-icon.png')}}">
+		<link
+		rel="shortcut icon" href="{{asset('logo.png')}}">
+
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="{{asset('global/css/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{asset('global/css/bootstrap-extend.min.css')}}">
+		<link
+		rel="stylesheet" href="{{asset('remark/assets/css/site.min.css')}}">
+
+		<!-- Plugins -->
+		<link rel="stylesheet" href="{{asset('global/vendor/animsition/animsition.css')}}">
+		<link rel="stylesheet" href="{{asset('global/vendor/asscrollable/asScrollable.css')}}">
+		<link rel="stylesheet" href="{{asset('global/vendor/switchery/switchery.css')}}">
+		<link rel="stylesheet" href="{{asset('global/vendor/intro-js/introjs.css')}}">
+		<link rel="stylesheet" href="{{asset('global/vendor/slidepanel/slidePanel.css')}}">
+		<link rel="stylesheet" href="{{asset('global/vendor/flag-icon-css/flag-icon.css')}}">
+		{% block plugins %}
+			<link rel="stylesheet" href="{{asset('global/vendor/chartist/chartist.css')}}">
+			<link rel="stylesheet" href="{{asset('global/vendor/jvectormap/jquery-jvectormap.css')}}">
+			<link rel="stylesheet" href="{{asset('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}">
+			<link rel="stylesheet" href="{{asset('remark/assets/examples/css/dashboard/v1.css')}}">
+		{% endblock %}
+
+
+		<!-- Fonts -->
+		<link rel="stylesheet" href="{{asset('global/fonts/font-awesome/font-awesome.css')}}">
+		<link rel="stylesheet" href="{{asset('global/fonts/weather-icons/weather-icons.css')}}">
+		<link rel="stylesheet" href="{{asset('global/fonts/web-icons/web-icons.min.css')}}">
+		<link rel="stylesheet" href="{{asset('global/fonts/brand-icons/brand-icons.min.css')}}">
+		<link rel='stylesheet' href='http:fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+
+		<!--[if lt IE 9]>
+		    <script src="{{asset('global/vendor/html5shiv/html5shiv.min.js')}}"></script>
+		    <![endif]-->
+
+		<!--[if lt IE 10]>
+		    <script src="{{asset('global/vendor/media-match/media.match.min.js')}}"></script>
+		    <script src="{{asset('global/vendor/respond/respond.min.js')}}"></script>
+		    <![endif]-->
+
+		<!-- Scripts --><script src="{{asset('global/vendor/breakpoints/breakpoints.js')}}"> </script>
+		<script>
+			Breakpoints();
+		</script>
+		<style>
+		.site-navbar {
+				background-color: yellow;
+		
+			}
+		</style>
+	</head>
+	<body
+		{% block className %} class="animsition dashboard" {% endblock %}>
+		<!--[if lt IE 8]>
+		        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http:browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		    <![endif]-->
+
+		<nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided" data-toggle="menubar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="hamburger-bar"></span>
+				</button>
+				<button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse" data-toggle="collapse">
+					<i class="icon wb-more-horizontal" aria-hidden="true"></i>
+				</button>
+				<div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+					<img class="navbar-brand-logo rounded-circle" src="{{asset('logo.png')}}" title="Remark">
+					<span class="navbar-brand-text hidden-xs-down" style="color:black;">
+						{{ App.name }}</span>
+				</div>
+				<button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search" data-toggle="collapse">
+					<span class="sr-only">Toggle Search</span>
+					<i class="icon wb-search" aria-hidden="true"></i>
+				</button>
+			</div>
+
+			<div
+				class="navbar-container container-fluid">
+				<!-- Navbar Collapse -->
+
+				<div
+					class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+					<!-- Navbar Toolbar -->
+					<ul class="nav navbar-toolbar">
+						<li class="nav-item hidden-float" id="toggleMenubar">
+							<a class="nav-link" data-toggle="menubar" href="#" role="button">
+								<i class="icon hamburger hamburger-arrow-left">
+									<span class="sr-only">Toggle menubar</span>
+									<span class="hamburger-bar"></span>
+								</i>
+							</a>
+						</li>
+						{% if app.user %}
+							<li class="nav-item hidden-sm-down" id="toggleFullscreen">
+								<a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
+									<span class="sr-only">Toggle fullscreen</span>
+								</a>
+							</li>
+							<li class="nav-item hidden-float">
+								<a class="nav-link icon wb-search" data-toggle="collapse" href="#" data-target="#site-navbar-search" role="button">
+									<span class="sr-only">Toggle Search</span>
+								</a>
+							</li>
+							<li class="nav-item dropdown dropdown-fw dropdown-mega" style="display:none;">
+								<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="fade" role="button">Mega
+									<i class="icon wb-chevron-down-mini" aria-hidden="true"></i>
+								</a>
+								<div class="dropdown-menu" role="menu">
+									<div class="mega-content">
+										<div class="row">
+											<div class="col-md-4">
+												<h5>UI Kit</h5>
+												<ul class="blocks-2">
+													<li class="mega-menu m-0">
+														<ul class="list-icons">
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="advanced/animation.html">Animation</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/buttons.html">Buttons</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/colors.html">Colors</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/dropdowns.html">Dropdowns</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/icons.html">Icons</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="advanced/lightbox.html">Lightbox</a>
+															</li>
+														</ul>
+													</li>
+													<li class="mega-menu m-0">
+														<ul class="list-icons">
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/modals.html">Modals</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/panel-structure.html">Panels</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="structure/overlay.html">Overlay</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/tooltip-popover.html ">Tooltips</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="advanced/scrollable.html">Scrollable</a>
+															</li>
+															<li>
+																<i class="wb-chevron-right-mini" aria-hidden="true"></i>
+																<a href="uikit/typography.html">Typography</a>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+											<div class="col-md-4">
+												<h5>Media
+													<span class="badge badge-pill badge-success">4</span>
+												</h5>
+												<ul class="blocks-3">
+													<li>
+														<a class="thumbnail m-0" href="javascript:void(0)">
+															<img class="w-full" src="{{asset('global/photos/placeholder.png')}}" alt="..."/>
+														</a>
+													</li>
+													<li>
+														<a class="thumbnail m-0" href="javascript:void(0)">
+															<img class="w-full" src="{{asset('global/photos/placeholder.png')}}" alt="..."/>
+														</a>
+													</li>
+													<li>
+														<a class="thumbnail m-0" href="javascript:void(0)">
+															<img class="w-full" src="{{asset('global/photos/placeholder.png')}}" alt="..."/>
+														</a>
+													</li>
+													<li>
+														<a class="thumbnail m-0" href="javascript:void(0)">
+															<img class="w-full" src="{{asset('global/photos/placeholder.png')}}" alt="..."/>
+														</a>
+													</li>
+													<li>
+														<a class="thumbnail m-0" href="javascript:void(0)">
+															<img class="w-full" src="{{asset('global/photos/placeholder.png')}}" alt="..."/>
+														</a>
+													</li>
+													<li>
+														<a class="thumbnail m-0" href="javascript:void(0)">
+															<img class="w-full" src="{{asset('global/photos/placeholder.png')}}" alt="..."/>
+														</a>
+													</li>
+												</ul>
+											</div>
+											<div class="col-md-4">
+												<h5 class="mb-0">Accordion</h5>
+												<!-- Accordion -->
+												<div class="panel-group panel-group-simple" id="siteMegaAccordion" aria-multiselectable="true" role="tablist">
+													<div class="panel">
+														<div class="panel-heading" id="siteMegaAccordionHeadingOne" role="tab">
+															<a class="panel-title" data-toggle="collapse" href="#siteMegaCollapseOne" data-parent="#siteMegaAccordion" aria-expanded="false" aria-controls="siteMegaCollapseOne">
+																Collapsible Group Item #1
+															</a>
+														</div>
+														<div class="panel-collapse collapse" id="siteMegaCollapseOne" aria-labelledby="siteMegaAccordionHeadingOne" role="tabpanel">
+															<div class="panel-body">
+																De moveat laudatur vestra parum doloribus labitur sentire partes, eripuit praesenti
+																                              congressus ostendit alienae, voluptati ornateque accusamus
+																                              clamat reperietur convicia albucius.
+															</div>
+														</div>
+													</div>
+													<div class="panel">
+														<div class="panel-heading" id="siteMegaAccordionHeadingTwo" role="tab">
+															<a class="panel-title collapsed" data-toggle="collapse" href="#siteMegaCollapseTwo" data-parent="#siteMegaAccordion" aria-expanded="false" aria-controls="siteMegaCollapseTwo">
+																Collapsible Group Item #2
+															</a>
+														</div>
+														<div class="panel-collapse collapse" id="siteMegaCollapseTwo" aria-labelledby="siteMegaAccordionHeadingTwo" role="tabpanel">
+															<div class="panel-body">
+																Praestabiliorem. Pellat excruciant legantur ullum leniter vacare foris voluptate
+																                              loco ignavi, credo videretur multoque choro fatemur mortis
+																                              animus adoptionem, bello statuat expediunt naturales.
+															</div>
+														</div>
+													</div>
+
+													<div class="panel">
+														<div class="panel-heading" id="siteMegaAccordionHeadingThree" role="tab">
+															<a class="panel-title collapsed" data-toggle="collapse" href="#siteMegaCollapseThree" data-parent="#siteMegaAccordion" aria-expanded="false" aria-controls="siteMegaCollapseThree">
+																Collapsible Group Item #3
+															</a>
+														</div>
+														<div class="panel-collapse collapse" id="siteMegaCollapseThree" aria-labelledby="siteMegaAccordionHeadingThree" role="tabpanel">
+															<div class="panel-body">
+																Horum, antiquitate perciperet d conspectum locus obruamus animumque perspici probabis
+																                              suscipere. Desiderat magnum, contenta poena desiderant
+																                              concederetur menandri damna disputandum corporum.
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- End Accordion -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						{% endif %}
+					</ul>
+					<!-- End Navbar Toolbar -->
+
+					<!-- Navbar Toolbar Right -->
+
+					<ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+						{% if app.user %}
+							<li class="nav-item dropdown" style="display:none;">
+								<a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" data-animation="scale-up" aria-expanded="false" role="button">
+									<span class="flag-icon flag-icon-us"></span>
+								</a>
+								<div class="dropdown-menu" role="menu">
+									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+										<span class="flag-icon flag-icon-gb"></span>
+										English</a>
+									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+										<span class="flag-icon flag-icon-fr"></span>
+										French</a>
+									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+										<span class="flag-icon flag-icon-cn"></span>
+										Chinese</a>
+									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+										<span class="flag-icon flag-icon-de"></span>
+										German</a>
+									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+										<span class="flag-icon flag-icon-nl"></span>
+										Dutch</a>
+								</div>
+							</li>
+							{% endif %}
+
+							{{ render(controller('App\\Controller\\DefaultController::cart')) }}
+
+							{% if not app.user %}
+							<li class="nav-item">
+								<a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
+							</li>
+							{% endif %}
+						{% if app.user %}
+
+							<li class="nav-item dropdown">
+								<a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
+									<span
+										class="avatar avatar-online">
+										{# <img src="{{asset('global/portraits/5.jpg')}}" alt="..."> #}
+										<img src="{{asset('logo.png')}}" alt="...">
+
+										<i></i>
+									</span>
+								</a>
+								<div class="dropdown-menu" role="menu">
+
+									<a class="dropdown-item" href="{{ path('admin_user_show', {user: app.user.id}) }}" role="menuitem">
+										<i class="icon wb-user" aria-hidden="true"></i>
+										Profile</a>
+
+									<a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+										<i class="icon wb-settings" aria-hidden="true"></i>
+										Settings</a>
+									<a class="dropdown-item" href="{{ path('admin_user_password_edit') }}">
+										<i class="icon fa-lock" aria-hidden="true"></i>Changer de mot de passe</a>
+									<div class="dropdown-divider" role="presentation"></div>
+									<a class="dropdown-item" href="{{ path('app_logout') }}" role="menuitem">
+										<i class="icon wb-power" aria-hidden="true"></i>
+										Logout</a>
+
+								</div>
+							</li>
+						{% endif %}
+
+					</ul>
+					<!-- End Navbar Toolbar Right -->
+
+				</div>
+				<!-- End Navbar Collapse -->
+
+				<!-- Site Navbar Seach -->
+				<div class="collapse navbar-search-overlap" id="site-navbar-search">
+					<form role="search">
+						<div class="form-group">
+							<div class="input-search">
+								<i class="input-search-icon wb-search" aria-hidden="true"></i>
+								<input type="text" class="form-control" name="site-search" placeholder="Search...">
+								<button type="button" class="input-search-close icon wb-close" data-target="#site-navbar-search" data-toggle="collapse" aria-label="Close"></button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- End Site Navbar Seach -->
+			</div>
+		</nav>
+		{% block left_sidebar %}{% endblock %}
+
+		<!-- Page -->
+		{% block main %}
+			<div class="page">
+				<div class="page-header">
+					<h3 class="page-title">
+						{% block entete %}{% endblock %}
+					</h3>
+					{% block search %}
+					<div class="page-header-actions">
+						{{ wo_render_breadcrumbs() }}
+			
+						{# <form>
+							<div class="input-search input-search-dark">
+							<i class="input-search-icon wb-search" aria-hidden="true"></i>
+							<input type="text" class="form-control" name="" placeholder="Search...">
+							</div>
+						</form> #}
+   
+					</div>
+					{% endblock %}
+				</div>
+
+				<div
+					class="page-content">
+					<!-- Panel -->
+					<div class="panel">
+						<div class="panel-body container-fluid">
+							{% block page %}{% endblock %}
+						</div>
+					</div>
+					<!-- End Panel -->
+				</div>
+			</div>
+		{% endblock %}
+		<!-- End Page -->
+
+
+		<!-- Footer -->
+		<footer class="site-footer">
+			<div class="site-footer-legal">© 2020
+				<a href="http:themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202">{{App.name}}</a>
+			</div>
+			<div class="site-footer-right" style="display:none;">
+				Crafted with
+				<i class="red-600 wb wb-heart"></i>
+				by
+				<a href="https:themeforest.net/user/creation-studio">Creation Studio</a>
+			</div>
+		</footer>
+		<!-- Core  -->
+		<script src="{{asset('global/vendor/babel-external-helpers/babel-external-helpers.js')}}"></script>
+		<script src="{{asset('global/vendor/jquery/jquery.js')}}"></script>
+		<script src="{{asset('global/vendor/popper-js/umd/popper.min.js')}}"></script>
+		<script src="{{asset('global/vendor/bootstrap/bootstrap.js')}}"></script>
+		<script src="{{asset('global/vendor/animsition/animsition.js')}}"></script>
+		<script src="{{asset('global/vendor/mousewheel/jquery.mousewheel.js')}}"></script>
+		<script src="{{asset('global/vendor/asscrollbar/jquery-asScrollbar.js')}}"></script>
+		<script src="{{asset('global/vendor/asscrollable/jquery-asScrollable.js')}}"></script>
+		<script src="{{asset('global/vendor/ashoverscroll/jquery-asHoverScroll.js')}}"></script>
+
+		<!-- Plugins -->
+		<script src="{{asset('global/vendor/switchery/switchery.js')}}"></script>
+		<script src="{{asset('global/vendor/intro-js/intro.js')}}"></script>
+		<script src="{{asset('global/vendor/screenfull/screenfull.js')}}"></script>
+		<script src="{{asset('global/vendor/slidepanel/jquery-slidePanel.js')}}"></script>
+		{% block pluginsFoot %}
+			<script src="{{asset('global/vendor/skycons/skycons.js')}}"></script>
+			<script src="{{asset('global/vendor/chartist/chartist.min.js')}}"></script>
+			<script src="{{asset('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}"></script>
+			<script src="{{asset('global/vendor/aspieprogress/jquery-asPieProgress.min.js')}}"></script>
+			<script src="{{asset('global/vendor/jvectormap/jquery-jvectormap.min.js')}}"></script>
+			<script src="{{asset('global/vendor/jvectormap/maps/jquery-jvectormap-au-mill-en.js')}}"></script>
+			<script src="{{asset('global/vendor/matchheight/jquery.matchHeight-min.js')}}"></script>
+		{% endblock %}
+
+		<!-- Scripts -->
+		<script src="{{asset('global/js/Component.js')}}"></script>
+		<script src="{{asset('global/js/Plugin.js')}}"></script>
+		<script src="{{asset('global/js/Base.js')}}"></script>
+		<script src="{{asset('global/js/Config.js')}}"></script>
+
+		<script src="{{asset('remark/assets/js/Section/Menubar.js')}}"></script>
+		<script src="{{asset('remark/assets/js/Section/GridMenu.js')}}"></script>
+		<script src="{{asset('remark/assets/js/Section/Sidebar.js')}}"></script>
+		<script src="{{asset('remark/assets/js/Section/PageAside.js')}}"></script>
+		<script src="{{asset('remark/assets/js/Plugin/menu.js')}}"></script>
+
+		<script src="{{asset('global/js/config/colors.js')}}"></script>
+		<script src="{{asset('remark/assets/js/config/tour.js')}}"></script>
+		<script>
+			Config.set('assets', '../assets');
+		</script>
+
+		<!-- Page -->
+		<script src="{{asset('remark/assets/js/Site.js')}}"></script>
+		<script src="{{asset('global/js/Plugin/asscrollable.js')}}"></script>
+		<script src="{{asset('global/js/Plugin/slidepanel.js')}}"></script>
+		<script src="{{asset('global/js/Plugin/switchery.js')}}"></script>
+		<script src="{{asset('global/js/Plugin/matchheight.js')}}"></script>
+		<script src="{{asset('global/js/Plugin/jvectormap.js')}}"></script>
+		{% block pageFoot %}
+			<script src="{{asset('remark/assets/examples/js/dashboard/v1.js')}}"></script>
+		{% endblock %}
+		<script>
+		// $(document).ready(function(){
+		// 	$(document).on('click','.add_to',function(e) {
+		// 	e.preventDefault();
+		// 	let data = $(this).attr('id');
+
+		// 	// console.log(data)
+		
+		// 	// var getUrl = Routing.generate("cart_add");
+		
+		// 	$.post('/panier/add/'+data,data).then(function(data){
+		
+		// 	    // console.log(data);
+		// 	    // let $input = $(data).find('#conge_personnel')
+		// 		// $('#conge_personnel').replaceWith(data)
+				
+		// 		$('.badge.badge-pill.badge-danger.up').html(data);
+				
+		// 	})
+
+		// 	// alert('hello');
+		// });
+		// })
+		</script>
+	</body>
+</html>

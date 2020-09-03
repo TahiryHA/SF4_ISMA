@@ -1,0 +1,104 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+	{{ App.name }}
+	&ndash;
+	{{ 'app.title'|trans }}
+{% endblock %}
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'my-cart' }
+    )) }}
+{% endblock %}
+{% block plugins %}
+	<link rel="stylesheet" href="{{asset('remark/assets/examples/css/pages/invoice.css')}}">
+{% endblock %}
+{% block entete %}Mon panier{% endblock %}
+{% block search %}{% endblock %}
+{% block page %}
+
+
+					<div class="page-invoice-table table-responsive">
+
+						{% if items | length > 0 %}
+							<table class="table table-hover text-right">
+								<thead>
+									<tr>
+										<th class="text-center">#</th>
+										<th>Description</th>
+										<th class="text-right">Quantité</th>
+										<th class="text-right">Prix unitaire</th>
+										<th class="text-right">Total</th>
+										<th class="text-right"></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for item in items %}
+										<tr>
+											<td class="text-center">
+												{{loop.index}}
+											</td>
+											<td class="text-left">
+												{{item.product.name|capitalize}}
+											</td>
+											<td>
+												{{item.quantity}}
+											</td>
+											<td>
+												{{item.product.price|number_format(2, '.', ',') ~ ' Ar '}}
+											</td>
+											<td>
+												{{ (item.quantity * item.product.price)|number_format(2, '.', ',') ~ ' Ar ' }}
+											</td>
+											<td>
+												<a href="{{ path('cart_remove', {'id' : item.product.id }) }}" class="btn btn-danger btn-sm">
+													<i class="fa fa-trash fa-lg"></i>
+												</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% else %}
+							<p>No record found</p>
+						{% endif %}
+
+					</div>
+
+					{% if items | length > 0 %}
+
+						<div class="text-right clearfix">
+							<div class="float-right">
+								<p class="page-invoice-amount">Grand Total:
+									<span>{{ total|number_format(2, '.', ',') ~ ' Ar ' }}</span>
+								</p>
+							</div>
+						</div>
+
+					
+						<div class="text-right">
+							<a href="{{path('validate')}}" type="submit" class="btn btn-animate btn-animate-side btn-primary">
+								<span>
+									<i class="icon wb-shopping-cart" aria-hidden="true"></i>Valider</span>
+							</a>
+
+						</div>
+				
+
+					{% endif %}
+
+
+{% endblock %}
+{% block javascript %}
+	<script>
+		(function (document, window, $) {
+'use strict';
+
+var Site = window.Site;
+$(document).ready(function () {
+Site.run();
+});
+})(document, window, jQuery);
+	</script>
+{% endblock %}

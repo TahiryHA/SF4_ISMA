@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block left_sidebar %}
+
+{% if active is not defined %}
+    {% set active = 'settings' %}
+{% endif %}
+
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : active }
+    )) }}
+
+{% endblock %}
+
+{% block entete %}
+ <span class="wb-settings"></span>
+         Paramètres
+{% endblock %}
+
+{% block page %}
+
+
+            {# <div class="tab-pane active px-0" id="{{ active }}" role="tabpanel" aria-labelledby="{{ active }}-tab"> #}
+               {% block content %}{% endblock %}
+            {# </div> #}
+          
+{% endblock %}

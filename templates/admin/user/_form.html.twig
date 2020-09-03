@@ -1,0 +1,74 @@
+{% form_theme form with ['bootstrap_4_layout.html.twig'] only %}
+
+<div class="row row-lg">
+	<div class="col-xl-12 form-horizontal">
+		<div class="form-group row">
+			<label class="col-xl-12 col-md-3 form-control-label">Nom d'utilisateur
+				<span class="required">*</span>
+			</label>
+			<div class=" col-xl-12 col-md-9">
+
+				{{ form_widget(form.username, {'attr': {'placeholder': "Nom d'utilisateur", 'class': 'form-control'}}) }}
+			</div>
+
+		</div>
+
+
+		<div class="form-group row">
+			<label class="col-xl-12 col-md-3 form-control-label">Description
+				<span class="required">*</span>
+			</label>
+			<div class="col-xl-12 col-md-9">
+				<textarea class="form-control" name="skills" rows="3" placeholder="Describe your skills" required=""></textarea>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-xl-12 col-md-3 form-control-label">Roles</label>
+			<div class="col-xl-12 col-md-9">
+				{{ form_widget(form.roles, {'attr': {
+                                'class': 'form-control',
+                                'id' : 'browsers',
+                                'title': 'Please select at least one browser',
+                                'size' : '5',
+                                'multiple': 'nultiple'
+
+                            }}) }}
+
+			</div>
+		</div>
+
+
+		<div class="form-group row">
+			<label class="col-xl-12 col-md-3 form-control-label">Mot de passe
+				<span class="required">*</span>
+			</label>
+			<div class="col-xl-12 col-md-9">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="icon wb-lock" aria-hidden="true"></i>
+					</span>
+					{{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Mot de passe', 'class': 'form-control'}}) }}
+
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-xl-12 col-md-3 form-control-label">Confimer le mot de passe
+				<span class="required">*</span>
+			</label>
+			<div class="col-xl-12 col-md-9">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="icon wb-lock" aria-hidden="true"></i>
+					</span>
+					{{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Confirmez le mot de passe', 'class': 'form-control'}}) }}
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group col-xl-12 text-right padding-top-m">
+		<button type="submit" class="btn btn-success" id="validateButton1">Enregistrer</button>
+	</div>
+</div>

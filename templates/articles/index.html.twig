@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Articles index{% endblock %}
+
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'articles' }
+    )) }}
+{% endblock %} 
+
+{% block entete %}
+
+<span class="fa fa-users"></span>
+Articles <span class="badge badge-pill badge-success">{{articles|length}}</span>
+
+{% endblock %}
+
+{% block page %}
+
+<div class="example-wrap">
+      <h4 class="example-title">Liste des articles</h4>
+        {% include "articles/table.html.twig" %}
+</div>
+{% endblock %}

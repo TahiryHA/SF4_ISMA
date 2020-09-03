@@ -1,0 +1,41 @@
+{% extends 'admin/base.html.twig' %}
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'user-list' }
+    )) }}
+{% endblock %}
+
+{% block entete %}
+
+<span class="fa fa-users"></span>
+Utilisateurs <span class="badge badge-pill badge-success">{{users|length}}</span>
+
+{% endblock %}
+
+{% block page %}
+
+    <div class="example-wrap">
+      <h4 class="example-title">Liste des utilisateurs</h4>
+      {% include 'admin/user/table.html.twig' with {users: users} %}
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    <script>
+        $("#confirmDeleteUserModal").on('show.bs.modal', function(e){
+            button = $(e.relatedTarget)
+
+            var modal = $(this);
+            var userId = button.data('user-id')
+            var username = button.data('username')
+
+            modal.find('.fullname').text(username)
+            modal.find('form').attr('action', '/admin/security/user/delete/' + userId)
+        });
+    </script>
+{% endblock %}
+
