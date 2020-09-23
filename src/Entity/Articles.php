@@ -60,7 +60,7 @@ class Articles
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commandes", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commandes", mappedBy="article" ,orphanRemoval=true)
      */
     private $commandes;
 
@@ -121,7 +121,7 @@ class Articles
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 

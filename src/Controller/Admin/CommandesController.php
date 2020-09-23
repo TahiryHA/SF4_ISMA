@@ -5,22 +5,33 @@ namespace App\Controller\Admin;
 use App\Entity\Commandes;
 use App\Form\CommandesType;
 use App\Repository\CommandesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/commandes")
  */
 class CommandesController extends AbstractController
 {
+    private $breadcrumbs;
+    public function __construct(Breadcrumbs $breadcrumbs)
+    {
+        $this->breadcrumbs = $breadcrumbs;
+    }
+    
     /**
      * @Route("/", name="commandes_index")
      */
     public function index(SessionInterface $session,CommandesRepository $commandeRepository): Response
     {
+        $this->breadcrumbs->prependRouteItem("Acceuil", "admin_index");
+        $this->breadcrumbs->addItem("Commande");
+        $this->breadcrumbs->addItem("Liste");
+
         $panier = $session->get('panier',[]);
         $panierWithData = [];
         foreach ($panier as $id => $quantity) {

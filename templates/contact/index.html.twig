@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Contact index{% endblock %}
+
+{% block left_sidebar %}
+{{ render(controller(
+        'App\\Controller\\DefaultController::left',
+        { 'active' : 'contact' }
+    )) }}
+{% endblock %}
+{% block page %}
+    <h4>Liste des contacts</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Nom</th>
+                <th>Prènom</th>
+                <th>Email</th>
+                <th>Message</th>
+                {# <th>actions</th> #}
+            </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.firstname }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.content }}</td>
+                {# <td>
+                    <a href="{{ path('contact_show', {'id': contact.id}) }}"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('contact_edit', {'id': contact.id}) }}"><i class="fas fa-edit"></i></a>
+                </td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

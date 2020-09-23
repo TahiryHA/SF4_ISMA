@@ -5,21 +5,32 @@ namespace App\Controller;
 use App\Entity\Categories;
 use App\Form\CategoriesType;
 use App\Repository\CategoriesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/categories")
  */
 class CategoriesController extends AbstractController
 {
+    private $breadcrumbs;
+    public function __construct(Breadcrumbs $breadcrumbs)
+    {
+        $this->breadcrumbs = $breadcrumbs;
+    }
+    
     /**
      * @Route("/", name="categories_index", methods={"GET"})
      */
     public function index(CategoriesRepository $categoriesRepository): Response
     {
+        $this->breadcrumbs->prependRouteItem("Acceuil", "admin_index");
+        $this->breadcrumbs->addItem("Catégorie");
+        $this->breadcrumbs->addItem("Liste");
+
         return $this->render('categories/index.html.twig', [
             'categories' => $categoriesRepository->findAll(),
         ]);
@@ -30,6 +41,10 @@ class CategoriesController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->breadcrumbs->prependRouteItem("Acceuil", "admin_index");
+        $this->breadcrumbs->addItem("Article");
+        $this->breadcrumbs->addItem("Ajouter");
+
         $category = new Categories();
         $form = $this->createForm(CategoriesType::class, $category);
         $form->handleRequest($request);

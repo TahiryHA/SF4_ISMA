@@ -7,7 +7,7 @@
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
                 <div class="dropdown-menu-header">
                   <h5>Mon panier</h5>
-                  <span class="badge badge-round badge-danger">{{' Articles ' ~ items | length }}</span>
+                  <span class="badge badge-round badge-danger">{{' Produits ' ~ items | length }}</span>
                 </div>
     
                 <div class="list-group">
@@ -31,9 +31,9 @@
                   </div>
                 </div>
                 <div class="dropdown-menu-footer">
-                  <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                  {# <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
                     <i class="icon wb-settings" aria-hidden="true"></i>
-                  </a>
+                  </a> #}
                   <a class="dropdown-item" href="{{path('my_cart')}}" role="menuitem">
                     Regarder mon panier
                   </a>

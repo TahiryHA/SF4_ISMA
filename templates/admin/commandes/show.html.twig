@@ -14,10 +14,7 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ commande.id }}</td>
-            </tr>
+           
             <tr>
                 <th>Client</th>
                 <td>{{ commande.user.username }}</td>
@@ -41,7 +38,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('commandes_index') }}">back to list</a>
+    <a href="{{ path('commandes_index') }}">Retour à la liste</a>
 
     {{ include('admin/commandes/_delete_form.html.twig') }}
 {% endblock %}

@@ -2,8 +2,7 @@
 
 {% block title %}
 	{{ App.name }}
-	&ndash;
-	{{ 'app.title'|trans }}
+
 {% endblock %}
 
 {% block left_sidebar %}
@@ -23,11 +22,12 @@
 
 			<div class="row">
 				<div class="col-12">
+        <h1>Bienvenue</h1>
 					<div class="example-wrap">
-              {# <h4 class="example-title">Pricing-List - Bg In Head</h4> #}
+              <h4 class="example-title">Trouver les produits que vous cherchez</h4>
               <div class="example">
                 <div class="row">
-                  {% for article in articles %}
+                  {% for article in articles|sort|reverse %}
                     <div class="col-md-6 col-xxl-3">
                       <div class="pricing-list text-left">
                        <figure class="overlay overlay-hover animation-hover">
@@ -40,7 +40,7 @@
                         
                         ">
                         <figcaption class="overlay-panel overlay-background overlay-fade text-center vertical-align">
-                          <a class="btn btn-primary btn-lg" href="{{ path('cart_add', {'id' : article.id}) }}"><i class="icon wb-arrow-right font-size-16 mr-15" aria-hidden="true"></i> Add to card</a>
+                          <a class="btn btn-primary btn-lg" href="{{ path('cart_add', {'id' : article.id}) }}"><i class="icon wb-arrow-right font-size-16 mr-15" aria-hidden="true"></i> Ajouter au panier</a>
                         </figcaption>
                       </figure>
                         <div class="pricing-header bg-blue-grey-600">
@@ -48,7 +48,7 @@
                           <div class="pricing-price" style="font-size:25px">
                             <span class="pricing-currency">Ar</span>
                             <span class="pricing-amount">{{article.price|number_format(0, '.', ',') }}</span>
-                            <span class="pricing-period">/ mo</span>
+                            {# <span class="pricing-period">/ mo</span> #}
                           </div>
                           <p class="px-30 pb-25">{{article.name}}</p>
                         </div>

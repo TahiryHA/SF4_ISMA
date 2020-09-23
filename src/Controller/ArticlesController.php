@@ -5,21 +5,31 @@ namespace App\Controller;
 use App\Entity\Articles;
 use App\Form\ArticlesType;
 use App\Repository\ArticlesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/articles")
  */
 class ArticlesController extends AbstractController
 {
+    private $breadcrumbs;
+    public function __construct(Breadcrumbs $breadcrumbs)
+    {
+        $this->breadcrumbs = $breadcrumbs;
+    }
     /**
      * @Route("/", name="articles_index", methods={"GET"})
      */
     public function index(ArticlesRepository $articlesRepository): Response
     {
+        $this->breadcrumbs->prependRouteItem("Acceuil", "admin_index");
+        $this->breadcrumbs->addItem("Article");
+        $this->breadcrumbs->addItem("Liste");
+
         return $this->render('articles/index.html.twig', [
             'articles' => $articlesRepository->findAll(),
         ]);
@@ -30,6 +40,10 @@ class ArticlesController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->breadcrumbs->prependRouteItem("Acceuil", "admin_index");
+        $this->breadcrumbs->addItem("Article");
+        $this->breadcrumbs->addItem("Ajouter");
+
         $article = new Articles();
         $form = $this->createForm(ArticlesType::class, $article);
         $form->handleRequest($request);

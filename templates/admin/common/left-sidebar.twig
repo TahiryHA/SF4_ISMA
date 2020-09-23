@@ -5,44 +5,52 @@
 		<div>
 			<div>
 				<ul class="site-menu" data-plugin="menu">
-					<li class="site-menu-category">General</li>
 
-					
+
 					{% if is_granted('ROLE_ADMIN') %}
-					<li class="site-menu-item has-sub {% if active == 'index' %} active {% endif %}">
-						<a href="{{path('admin_index')}}">
-							<i class="site-menu-icon wb-home" aria-hidden="true"></i>
-							<span class="site-menu-title">Tableau de bord</span>
-						</a>
-					</li>
+						<li class="site-menu-item has-sub {% if active == 'index' %} active {% endif %}">
+							<a href="{{path('admin_index')}}">
+								<i class="site-menu-icon wb-home" aria-hidden="true"></i>
+								<span class="site-menu-title">Tableau de bord</span>
+							</a>
+						</li>
 					{% endif %}
+					
+					{% if not is_granted('ROLE_ADMIN') %}
 					<li class="site-menu-item has-sub {% if active == 'my-cart' %} active {% endif %}">
 						<a href="{{path('my_cart')}}">
-								<i class="site-menu-icon fas fa-shopping-cart" aria-hidden="true"></i>
-								<span class="site-menu-title">Mon Panier</span>
-									<div class="site-menu-badge">
-										<span class="badge badge-pill badge-success">{{ items | length }}</span>
-									</div>
+							<i class="site-menu-icon fas fa-shopping-cart" aria-hidden="true"></i>
+							<span class="site-menu-title">Mon Panier</span>
+							<div class="site-menu-badge">
+								<span class="badge badge-pill badge-success">{{ items | length }}</span>
+							</div>
 						</a>
-						
+
 					</li>
-					<li class="site-menu-item has-sub {% if active == 'all-articles' %} active {% endif %}">
-						<a href="{{path('base_index')}}">
+						<li class="site-menu-item has-sub {% if active == 'all-articles' %} active {% endif %}">
+							<a href="{{path('base_index')}}">
 								<i class="site-menu-icon fas fa-star" aria-hidden="true"></i>
 								<span class="site-menu-title">Tout les articles</span>
-									{# <div class="site-menu-badge">
-										<span class="badge badge-pill badge-success">{{ items | length }}</span>
-									</div> #}
-						</a>
-						
-					</li>
+								{# <div class="site-menu-badge">
+																		<span class="badge badge-pill badge-success">{{ items | length }}</span>
+																	</div> #}
+							</a>
+
+						</li>
+					{% endif %}
 					{% if is_granted('ROLE_ADMIN') %}
 
-					<li class="site-menu-category" style="display:none;">Elements</li>
+						<li class="site-menu-item has-sub {% if active == 'commandes' %} active {% endif %}">
+							<a href="{{path('commandes_index')}}">
+								<i class="site-menu-icon wb-briefcase" aria-hidden="true"></i>
+								<span class="site-menu-title">Commandes</span>
+							</a>
+						</li>
+						
 						<li class="site-menu-item has-sub {% if active == 'articles' %} active {% endif %}">
 							<a href="{{path('articles_index')}}">
 								<i class="site-menu-icon wb-order" aria-hidden="true"></i>
-								<span class="site-menu-title">Articles</span>
+								<span class="site-menu-title">Produits</span>
 							</a>
 						</li>
 						<li class="site-menu-item has-sub {% if active == 'categories' %} active {% endif %}">
@@ -51,12 +59,13 @@
 								<span class="site-menu-title">Catégorie</span>
 							</a>
 						</li>
-						<li class="site-menu-item has-sub {% if active == 'commandes' %} active {% endif %}">
-							<a href="{{path('commandes_index')}}">
-								<i class="site-menu-icon wb-briefcase" aria-hidden="true"></i>
-								<span class="site-menu-title">Commandes</span>
+						<li class="site-menu-item has-sub {% if active == 'contact' %} active {% endif %}">
+							<a href="{{path('contact_index')}}">
+								<i class="site-menu-icon wb-order" aria-hidden="true"></i>
+								<span class="site-menu-title">Contact</span>
 							</a>
 						</li>
+						
 						<li class="site-menu-item has-sub {% if active == 'user-list' %} active {% endif %}">
 							<a href="{{path('admin_users')}}">
 								<i class="site-menu-icon wb-users" aria-hidden="true"></i>
@@ -77,7 +86,7 @@
 								</li>
 								<li class="site-menu-item {% if active == 'new-article'  %}active{% endif %}">
 									<a class="animsition-link" href="{{path('articles_new')}}">
-										<span class="site-menu-title">Article</span>
+										<span class="site-menu-title">Produit</span>
 									</a>
 								</li>
 								<li class="site-menu-item {% if active == 'new-categorie'  %}active{% endif %}">
@@ -98,65 +107,11 @@
 						</li>
 					</ul>
 				</li>
-				{% if is_granted('ROLE_ADMIN') %}
-					<li class="site-menu-item has-sub {% if active in in_settings %}active open{% endif %} ">
-						<a href="javascript:void(0)">
-							<i class="site-menu-icon wb-settings" aria-hidden="true"></i>
-							<span class="site-menu-title">Paramètres</span>
-							<span class="site-menu-arrow"></span>
-						</a>
-						<ul class="site-menu-sub">
-							<li class="site-menu-item {% if active in in_settings %}active{% endif %}">
-								<a class="animsition-link" href="{{ path('admin_users_setting') }}">
-									<span class="site-menu-title">Utilisateurs</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-				{% endif %}
+				
 			</ul>
-			<div class="site-menubar-section" style="display:none;">
-				<h5>
-					Milestone
-					<span class="float-right">30%</span>
-				</h5>
-				<div class="progress progress-xs">
-					<div class="progress-bar active" style="width: 30%;" role="progressbar"></div>
-				</div>
-				<h5>
-					Release
-					<span class="float-right">60%</span>
-				</h5>
-				<div class="progress progress-xs">
-					<div class="progress-bar progress-bar-warning" style="width: 60%;" role="progressbar"></div>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 </div>
 
-{% if app.user %}
-]<div class="site-menubar-footer">
-	<a href="{{ path('admin_users_setting') }}" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Settings">
-		<span class="icon wb-settings" aria-hidden="true"></span>
-	</a>
-	<a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Lock">
-		<span class="icon wb-eye-close" aria-hidden="true"></span>
-	</a>
-	<a href="{{ path('app_logout') }}" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
-		<span class="icon wb-power" aria-hidden="true"></span>
-	</a>
 </div>
-
-
-{% endif %}
-</div><div class="site-gridmenu">
-<div>
-	<div>
-		<ul>
-			<li><ahref="{{path('admin_users')}}"><i class="icon wb-user"></i><span>Utilisateurs</span></a></li>
-			<li><ahref=""><i class="icon wb-order"></i><span>Documents</span></a></li>
-			<li><ahref="{{path('admin_index')}}"><i class="icon wb-dashboard"></i><span>Tableau de bord</span></a></li>
-		</ul>
-	</div>
-</div></div>
